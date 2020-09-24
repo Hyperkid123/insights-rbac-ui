@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import componentTypes from '@data-driven-forms/react-form-renderer/dist/cjs/component-types';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/';
 
 import ModalFormTemplate from '../common/ModalFormTemplate';
 import FormRenderer from '../common/form-renderer';
@@ -68,6 +69,15 @@ const EditRoleModal = ({ routeMatch, cancelRoute, afterSubmit }) => {
   const handleSubmit = (data) =>
     dispatch(updateRole(id, { ...data, display_name: data.name })).then(() => {
       afterSubmit();
+      dispatch(
+        addNotification({
+          variant: 'success',
+          title: 'Success removing role',
+          dismissDelay: 8000,
+          dismissable: false,
+          description: `Role ${data.name} was updated successfully.`,
+        })
+      );
       push(cancelRoute);
     });
 
