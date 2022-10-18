@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useState, useEffect, lazy, useContext } from 'react';
+import React, { Fragment, Suspense, useState, useEffect, lazy, useContext, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { Link, Route, Switch, useHistory } from 'react-router-dom';
@@ -36,6 +36,7 @@ const Roles = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const { roles, filters, meta, isLoading } = useSelector(selector, shallowEqual);
+  const textFilterRef = useRef(null);
   const fetchData = (options) => {
     return dispatch(fetchRolesWithPolicies({ ...options, inModal: false }));
   };
@@ -160,6 +161,7 @@ const Roles = () => {
       <StackItem>
         <Section type="content" id={'tab-roles'}>
           <TableToolbarView
+            textFilterRef={textFilterRef}
             actionResolver={actionResolver}
             sortBy={sortByState}
             columns={columns}

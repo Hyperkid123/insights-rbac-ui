@@ -83,7 +83,8 @@ export const filterConfigBuilder = (
   onFilter,
   onChange,
   value,
-  sortBy
+  sortBy,
+  textFilterRef
 ) => {
   const intl = useIntl();
   return {
@@ -136,6 +137,7 @@ export const filterConfigBuilder = (
               label: firstUpperCase(filterPlaceholder || titleSingular),
               type: 'text',
               filterValues: {
+                innerRef: textFilterRef,
                 id: 'filter-by-string',
                 key: 'filter-by-string',
                 placeholder: intl.formatMessage(messages.filterByKey, { key: filterPlaceholder || titleSingular }),
@@ -153,7 +155,12 @@ export const filterConfigBuilder = (
                       name: value,
                       orderBy: sortBy,
                     })
-                  );
+                  ).then((data) => {
+                    if (textFilterRef) {
+                      textFilterRef?.current?.focus();
+                    }
+                    return data;
+                  });
                 },
                 isDisabled: isLoading,
               },
@@ -248,6 +255,7 @@ const Toolbar = ({
   value,
   hideFilterChips,
   tableId,
+  textFilterRef,
 }) => (
   <PrimaryToolbar
     {...(isSelectable && {
@@ -269,7 +277,8 @@ const Toolbar = ({
       onFilter,
       onChange,
       value,
-      sortBy
+      sortBy,
+      textFilterRef
     )}
     useMobileLayout
     actionsConfig={{
@@ -320,6 +329,7 @@ Toolbar.propTypes = {
   toolbarButtons: PropTypes.func,
   hideFilterChips: PropTypes.bool,
   tableId: PropTypes.string,
+  textFilterRef: PropTypes.object,
 };
 
 Toolbar.defaultProps = {
