@@ -20,6 +20,7 @@ module.exports = {
     exposes: {
       './MyUserAccess': path.resolve(__dirname, './src/entries/MyUserAccess.js'),
       './IamUserAccess': path.resolve(__dirname, './src/entries/IamUserAccess.js'),
+      './GlobalSearchTemplate': path.resolve(__dirname, './src/entries/searchEntry.tsx'),
     },
     exclude: ['react-router-dom'],
     shared: [{ 'react-router-dom': { singleton: true, version: '^6.18.0', requiredVersion: '*' } }],
